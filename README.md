@@ -1,10 +1,10 @@
 ### **Heart Disease Risk Assessment Project**
 
-This repository contains code for a heart disease risk assessment project, allowing users to input health metrics through a user-friendly interface and implementing a machine learning model (Random Forest) for risk assessment.
+This repository contains code for a heart disease risk assessment tool, enabling users to input health metrics through a user-friendly interface and utilizing a machine learning model (Logistic Regression) for risk assessment.
 
 ### **Dataset**
 
-The dataset used in this project is obtained from Kaggle and contains anonymized patient data related to heart disease diagnosis. It includes features such as age, sex, blood pressure, cholesterol levels, and more. The dataset is sourced from the UCI Machine Learning Repository.
+The dataset used in this project is obtained from Kaggle and contains anonymized patient data relevant to the diagnosis of heart disease. It includes features such as age, sex, blood pressure, cholesterol levels, and more. The dataset is sourced from the UCI Machine Learning Repository.
 
 You can access the dataset on Kaggle via the following link: [Heart Disease Dataset](https://www.kaggle.com/datasets/johnsmith88/heart-disease-dataset)
 
@@ -12,8 +12,8 @@ You can access the dataset on Kaggle via the following link: [Heart Disease Data
 
 The project involves the following steps:
 
-1. **User Interface Development:** Creating a user-friendly interface using Streamlit to allow users to input their health metrics conveniently.
-2. **Model Building:** Constructing a machine learning model using the Random Forest Classifier algorithm to predict the risk of heart disease based on the input health metrics.
+1. **User Interface Development:** Developing a user-friendly interface using Streamlit to allow users to conveniently input their health metrics.
+2. **Model Building:** Creating a machine learning model using the Logistic Regression algorithm to predict the risk of heart disease based on the input health metrics.
 3. **Model Deployment:** Deploying the model within the Streamlit application to provide real-time risk assessment.
 
 ### **Files**
@@ -34,7 +34,7 @@ To use the code in this repository:
     pip install streamlit pandas numpy scikit-learn
     ```
     
-4. Run the **`heart_disease_risk_assessment.py`** script to execute the project code.
+4. Run the **`heart_disease_risk_assessment.py`** script to launch the application.
 
 ### **Requirements**
 
@@ -58,8 +58,8 @@ pip install streamlit pandas numpy scikit-learn
 
 ### **Acknowledgments**
 
-- The dataset used in this project is sourced from Kaggle and provided by the UCI Machine Learning Repository.
-- Special thanks to the contributors and maintainers of the dataset for making it publicly available for research purposes.
+- Thanks to Kaggle and the UCI Machine Learning Repository for providing the dataset used in this project.
+- Special thanks to the contributors and maintainers of the dataset for making it publicly available for research and educational purposes.
 
 ### **License**
 
