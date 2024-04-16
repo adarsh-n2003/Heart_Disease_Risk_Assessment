@@ -6,33 +6,26 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
 
-# Function to load data
 @st.cache_resource
 def load_data():
     data = pd.read_csv('heart_disease_dataset.csv')
     return data
 
-# Function to train the model
 @st.cache_data
 def get_model(X, y):
-    # Splitting the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    # Creating a pipeline for scaling and logistic regression
     pipeline = make_pipeline(StandardScaler(), LogisticRegression(random_state=42))
     pipeline.fit(X_train, y_train)
     
     return pipeline
 
-# Load and prepare data
 heart_data = load_data()
 X = heart_data.drop('target', axis=1)
 y = heart_data['target']
 
-# Train model
 model = get_model(X, y)
 
-# Streamlit UI setup
 st.title('Heart Disease Risk Assessment')
 
 with st.form("prediction_form"):
