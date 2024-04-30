@@ -5,27 +5,43 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.pipeline import make_pipeline
+import mysql.connector
 
+# Establish connection to MySQL database
+conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="Adarsh@2003",
+    database="heartdiseases"
+)
+
+# Function to load data
 @st.cache_resource
 def load_data():
     data = pd.read_csv('heart_disease_dataset.csv')
     return data
 
+# Function to train the model
 @st.cache_data
 def get_model(X, y):
+    # Splitting the dataset into training and testing sets
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
+    # Creating a pipeline for scaling and logistic regression
     pipeline = make_pipeline(StandardScaler(), LogisticRegression(random_state=42))
     pipeline.fit(X_train, y_train)
     
     return pipeline
 
+# Load and prepare data
 heart_data = load_data()
 X = heart_data.drop('target', axis=1)
 y = heart_data['target']
 
+# Train model
 model = get_model(X, y)
 
+# Streamlit UI setup
 st.title('Heart Disease Risk Assessment')
 
 with st.form("prediction_form"):
@@ -53,7 +69,25 @@ with st.form("prediction_form"):
         input_data = np.array([[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]])
         prediction = model.predict(input_data)[0]
         
+        # Convert categorical data to numerical values
+        sex = 1 if sex == 'Male' else 0
+        fbs = 1 if fbs == 'Yes' else 0
+        exang = 1 if exang == 'Yes' else 0
+    
+        # Prepare data for insertion
+        input_data = [[age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal]]
+    
+        # Insert data into MySQL database
+        cursor = conn.cursor()
+        insert_query = "INSERT INTO health_metrics (age, sex, cp, trestbps, chol, fbs, restecg, thalach, exang, oldpeak, slope, ca, thal) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        cursor.execute(insert_query, input_data[0])
+        conn.commit()
+        cursor.close()
+        st.success("Data successfully stored in the database.")
+
         if prediction == 0:
             st.success('No heart disease risk detected.')
         elif prediction == 1:
             st.error('Heart disease risk detected.')
+
+        conn.close()
